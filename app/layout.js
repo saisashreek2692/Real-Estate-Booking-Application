@@ -2,6 +2,7 @@ import { Jost } from "next/font/google";
 import "./globals.css";
 import Provider from "./Provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -16,7 +17,10 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body className={jost.className}>
-          <Provider>{children}</Provider>
+          <Provider>
+            {children}
+            <Toaster />
+          </Provider>
         </body>
       </html>
     </ClerkProvider>

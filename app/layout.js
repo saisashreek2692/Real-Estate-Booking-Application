@@ -1,6 +1,7 @@
 import { Jost } from "next/font/google";
 import "./globals.css";
 import Provider from "./Provider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -12,10 +13,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={jost.className}>
-        <Provider>{children}</Provider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={jost.className}>
+          <Provider>{children}</Provider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

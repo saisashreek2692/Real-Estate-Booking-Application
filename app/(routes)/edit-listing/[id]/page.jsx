@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -23,6 +24,7 @@ function EditListing({params}) {
     //const params = usePathname();
     const {user} = useUser();
     const router = useRouter();
+    const [listing, setListing] = useState([]);
 
     useEffect(() => {
         // console.log(params.split('/')[2]);
@@ -49,6 +51,10 @@ function EditListing({params}) {
         .update(formValue)
         .eq('id', params.id)
         .select()
+
+        if (data) {
+          setListing(data[0])
+        }
 
         if (data) {
             console.log(data);
@@ -88,7 +94,7 @@ function EditListing({params}) {
                 <div className="grid grid-cols-1 md:grid-cols-3">
                   <div className="flex flex-col gap-2">
                     <h2 className="text-lg text-slate-500">Rent or Sell?</h2>
-                    <RadioGroup defaultValue="Rent" onValueChange={(v) => values.type=v}>
+                    <RadioGroup defaultValue={listing?.type} onValueChange={(v) => values.type=v}>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="Rent" id="Rent" />
                         <Label htmlFor="Rent">Rent</Label>
@@ -101,7 +107,7 @@ function EditListing({params}) {
                   </div>
                   <div className="flex flex-col gap-2">
                     <h2 className="text-lg text-slate-500">Property Type</h2>
-                    <Select onValueChange={(e) => values.propertyType=e}>
+                    <Select onValueChange={(e) => values.propertyType=e} defaultValue={listing?.propertyType}>
                       <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Select Property Type" />
                       </SelectTrigger>
@@ -115,13 +121,14 @@ function EditListing({params}) {
                     </Select>
                   </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                   <div className="flex flex-col gap-2">
                     <h2 className="text-slate-500">Bedroom</h2>
                     <Input
                       type="number"
                       placeholder="Ex.2"
-                      name="bedroom"
+                      defaultValue={listing?.bedroom}
+                      name="bedroom"                      
                       onChange={handleChange}
                     />
                   </div>
@@ -130,6 +137,7 @@ function EditListing({params}) {
                     <Input
                       type="number"
                       placeholder="Ex.2"
+                      defaultValue={listing?.bathroom}
                       name="bathroom"
                       onChange={handleChange}
                     />
@@ -139,6 +147,7 @@ function EditListing({params}) {
                     <Input
                       type="number"
                       placeholder="Ex.1900 Sq.Ft"
+                      defaultValue={listing?.builtIn}
                       name="builtIn"
                       onChange={handleChange}
                     />
@@ -148,6 +157,7 @@ function EditListing({params}) {
                     <Input
                       type="number"
                       placeholder="Ex.2"
+                      defaultValue={listing?.parking}
                       name="parking"
                       onChange={handleChange}
                     />
@@ -157,6 +167,7 @@ function EditListing({params}) {
                     <Input
                       type="number"
                       placeholder=""
+                      defaultValue={listing?.lotSize}
                       name="lotSize"
                       onChange={handleChange}
                     />
@@ -166,6 +177,7 @@ function EditListing({params}) {
                     <Input
                       type="number"
                       placeholder="Ex.1900"
+                      defaultValue={listing?.area}
                       name="area"
                       onChange={handleChange}
                     />
@@ -175,6 +187,7 @@ function EditListing({params}) {
                     <Input
                       type="number"
                       placeholder="40000"
+                      defaultValue={listing?.price}
                       name="price"
                       onChange={handleChange}
                     />
@@ -183,9 +196,8 @@ function EditListing({params}) {
                     <h2 className="text-slate-500">HOA (Per Month)($)</h2>
                     <Input
                       type="number"
-                      min="1900"
-                      max="2100"
                       placeholder="100"
+                      defaultValue={listing?.hoa}
                       name="hoa"
                       onChange={handleChange}
                     />
@@ -196,6 +208,7 @@ function EditListing({params}) {
                     <h2 className="text-slate-500">Description</h2>
                     <Textarea
                       placeholder="Add Home Description......"
+                      defaultValue={listing?.description}
                       name="description"
                       onChange={handleChange}
                     />

@@ -73,15 +73,8 @@ function EditListing({params}) {
           initialValues={{
             type: "",
             propertyType: "",
-            bedroom: "",
-            bathroom: "",
-            builtIn: "",
-            parking: "",
-            lotSize: "",
-            area: "",
-            price: "",
-            hoa: "",
-            description: "",
+            profileImage: user?.imageUrl,
+            fullName: user?.fullName
           }}
           onSubmit={(values) => {
             console.log(values)
@@ -109,7 +102,7 @@ function EditListing({params}) {
                     <h2 className="text-lg text-slate-500">Property Type</h2>
                     <Select onValueChange={(e) => values.propertyType=e} defaultValue={listing?.propertyType}>
                       <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select Property Type" />
+                        <SelectValue placeholder={listing?.propertyType?listing?.propertyType:"Select Property Type"} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Single Family House">
